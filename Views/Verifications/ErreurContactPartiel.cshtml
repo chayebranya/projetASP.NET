@@ -1,0 +1,171 @@
+﻿@model VegeMoteur.App.Database.ErreurContactPleineTouche
+
+@{
+    ViewBag.Title = "Erreur de Contact Partiel";
+}
+
+<h2>Vérification</h2>
+
+<div>
+    <h4>Erreur Contact Pleine Touche</h4>
+    <hr />
+    <dl class="dl-horizontal">
+
+        <dt>
+            @Html.DisplayNameFor(model => model.CaleMax)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.CaleMax)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Emax)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Emax)
+        </dd>
+
+    </dl>
+</div>
+<hr />
+
+<h4>Étape 2 - Erreur Contact Partiel</h4>
+<hr />
+<table class="table table-bordered">
+    <tr>
+        <th>
+            Positions
+        </th>
+        <td>
+            Mesure 1
+        </td>
+        <td>
+            Ecart 1
+        </td>
+        <td>
+            Mesure 2
+        </td>
+        <td>
+            Ecart 2
+        </td>
+        <td>
+            Emax
+        </td>
+    </tr>
+    <tr>
+        <th>
+            La plus proche de la règle
+        </th>
+        <td>
+            <input type="text" class="form-control mesure-1" id="mesure-1-1" data-index="1"/>
+        </td>
+        <td>
+            <input type="text" class="form-control ecart-1" id="ecart-1-1" readonly />
+        </td>
+        <td>
+            <input type="text" class="form-control mesure-2" id="mesure-2-1" data-index="1"/>
+        </td>
+        <td>
+            <input type="text" class="form-control ecart-2" id="ecart-2-1" data-index="1" readonly />
+        </td>
+        <td>
+            <input type="text" class="form-control Emax" id="emax-1" readonly />
+        </td>
+    </tr>
+    <tr>
+        <th>
+            Au milieu des becs
+        </th>
+        <td>
+            <input type="text" class="form-control mesure-1" id="mesure-1-2" data-index="2"/>
+        </td>
+        <td>
+            <input type="text" class="form-control ecart-1" id="ecart-1-2" readonly />
+        </td>
+        <td>
+            <input type="text" class="form-control mesure-2" id="mesure-2-2" data-index="2"/>
+        </td>
+        <td>
+            <input type="text" class="form-control ecart-2" id="ecart-2-2" data-index="2" readonly />
+
+        </td>
+        <td>
+            <input type="text" class="form-control Emax" id="emax-2" readonly />
+        </td>
+    </tr>
+    <tr>
+        <th>
+            A l’extrémité du bec
+        </th>
+        <td>
+            <input type="text" class="form-control mesure-1" id="mesure-1-3" data-index="3" />
+        </td>
+        <td>
+            <input type="text" class="form-control ecart-1" id="ecart-1-3" readonly />
+
+        </td>
+        <td>
+            <input type="text" class="form-control mesure-2" id="mesure-2-3" data-index="3"/>
+        </td>
+        <td>
+            <input type="text" class="form-control ecart-2" id="ecart-2-3" data-index="3" readonly />
+        </td>
+        <td>
+            <input type="text" class="form-control Emax" id="emax-3" readonly />
+        </td>
+    </tr>
+</table>
+<hr />
+<table class="table table-bordered">
+    <tr>
+        <th>
+            Emax
+        </th>
+        <td>
+            <input type="text" class="form-control" name="Emax" readonly id="Emax" />
+        </td>
+    </tr>
+</table>
+<button class="btn btn-success">Sauvegarder</button>
+
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+    <script>
+        var Emax = parseInt('@Model.Emax');
+        $(document).ready(function () {
+            
+            $('.mesure-1').on('keyup', function () {
+                var index = parseInt($(this).data('index'));
+                var ecart = Math.abs(parseFloat($('#mesure-1-' + index).val()) - Emax);
+               
+                $('#ecart-1-' + index).val(ecart)
+            });
+
+            $('.mesure-2').on('keyup', function () {
+                var index = parseInt($(this).data('index'));
+                var ecart = Math.abs(parseFloat($('#mesure-2-' + index).val()) - Emax);
+               
+                $('#ecart-2-' + index).val(ecart).change();
+            });
+
+             $('.ecart-2').on('change', function () {
+                var index = parseInt($(this).data('index'));
+                var ecart = Math.max(parseInt($('#ecart-1-' + index).val()), parseFloat($('#ecart-2-' + index).val()));
+               
+                 $('#emax-' + index).val(ecart).change();
+             });
+
+            $('.Emax').on('change', function () {
+                var emax1 = 0;
+                var emax2 = 0;
+                var emax3 = 0;
+                emax1 = parseFloat($('#emax-1').val());
+                emax2 = parseFloat($('#emax-2').val());
+                emax3 = parseFloat($('#emax-3').val());
+                $('#Emax').val(Math.max(emax1, emax2, emax3));
+            });
+        });
+    </script>
+}

@@ -1,0 +1,40 @@
+﻿@model IEnumerable<VegeMoteur.App.Database.InstrumentSpecifique>
+
+@{
+    ViewBag.Title = "Verifier";
+}
+
+    <h4>Processus de vérification</h4>
+
+<p>
+    Aujourd'hui: @DateTime.Now.ToString("dd MMMM yyyy")
+</p>
+<table class="table table-hover">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.Code)
+            </th>
+            <th>
+                Date de vérification
+            </th>
+            <th>
+                Vérification
+            </th>
+        </tr>
+    </thead>
+@foreach (var item in Model) {
+    <tr>
+        <td>
+            @Html.DisplayFor(modelItem => item.Code)
+        </td>
+        <td>
+            @item.DateMiseEnService.Value.ToString("dd MMMM yyyy")
+        </td>
+        <td>
+            <a href="/verifications/ErreurContactPleineTouche/@item.Id" class="btn btn-outline-primary btn-sm"><i class="far fa-check-circle"></i> Vérifier</a>
+        </td>
+    </tr>
+}
+
+</table>

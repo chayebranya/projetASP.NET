@@ -1,0 +1,162 @@
+﻿@model VegeMoteur.App.Database.Norme
+@using VegeMoteur.App.Database;
+
+@{
+	ViewBag.Title = "Edit";
+	IEnumerable<InstrumentSpecifique> InstrumentsSpecifiques = ViewBag.InstrumentsSpecifiques;
+}
+
+<h4>Edit Norme</h4>
+
+
+@using (Html.BeginForm())
+{
+@Html.AntiForgeryToken()
+
+<div class="form-horizontal">
+
+	<hr />
+	@Html.ValidationSummary(true, "", new { @class = "text-danger" })
+	@Html.HiddenFor(model => model.Id)
+
+	<div class="form-group">
+		<label class="control-label">Instrument Specifique</label>
+		<select class="form-control" name="InstrumentSpecifiqueId" id="InstrumentSpecifiqueId">
+			@foreach (var item in InstrumentsSpecifiques)
+			{
+				<option value="@item.Id" data-etendu-max="@(item.EtenduMax != null ? item.EtenduMax:0)">@item.Code</option>
+			}
+		</select>
+		<div class="alert alert-warning p-1" id="noEtenduMaxWarning" style="display:none;">L'instrument sélectionné n'a pas d'Etendu Max. Veuillez en sélectionner un autre.</div>
+	</div>
+
+	<div class="form-group">
+		@Html.LabelFor(model => model.NombrePosition, "Nombre de position (entre 5 et 10)", htmlAttributes: new { @class = "control-label" })
+		@Html.EditorFor(model => model.NombrePosition, new { htmlAttributes = new { @class = "form-control" } })
+		@Html.ValidationMessageFor(model => model.NombrePosition, "", new { @class = "text-danger" })
+		<span class="text-danger" id="errorMessage" style="display:none">Veuillez saisir une valeur entre 5 et 10</span>
+
+	</div>
+
+	<div class="form-group">
+		<div class="checkbox">
+			@Html.EditorFor(model => model.Actuelle)
+			@Html.LabelFor(model => model.Actuelle, htmlAttributes: new { @class = "control-label" })
+
+			@Html.ValidationMessageFor(model => model.Actuelle, "", new { @class = "text-danger" })
+		</div>
+
+	</div>
+	<div id="calesFormsDiv">
+		<h4>
+			Cales
+		</h4>
+		<table class="table table-bordered" id="calesFormsContainer">
+			<tr>
+				@{ 
+					var index = 0;
+				}
+				@foreach (var cale in Model.Cales)
+				{
+					<td>						
+						<label class="control-label" for="Valeur@(index)"> Cale @(index+1)</label>
+						<input class="form-control text-box single-line" id="Valeur@(index)" name="Valeur@(index)" type="text" value="@cale.Valeur">
+					</td>
+					
+						index = index+1;
+					
+				}
+			</tr>
+		</table>
+	</div>
+
+	<div class="form-group">
+		<input type="submit" value="Save" class="btn btn-primary" id="submitBtn" />
+	</div>
+</div>
+}
+
+<div>
+	@Html.ActionLink("Back to List", "Index")
+</div>
+
+@section Scripts {
+	@Scripts.Render("~/bundles/jqueryval")
+	<script>
+		$(document).ready(function () {
+			var etenduMax = 0;
+			var noEtenduMaxWarning = $('#noEtenduMaxWarning');
+
+			var selectedInstrumentSpecifique = $('#InstrumentSpecifiqueId').find(":selected");
+			etenduMax = selectedInstrumentSpecifique.data('etenduMax');
+			if (parseFloat(etenduMax) == 0) {
+				noEtenduMaxWarning.show();
+			} else {
+				noEtenduMaxWarning.hide();
+			}
+
+			$('#InstrumentSpecifiqueId').on('change', function () {
+
+				etenduMax = $(this).children('option:selected').data('etenduMax');
+				if (parseFloat(etenduMax) == 0) {
+					noEtenduMaxWarning.show();
+				} else {
+					noEtenduMaxWarning.hide();
+				}
+
+				if (parseInt($('#NombrePosition').val()) >= 5 && parseInt($('#NombrePosition').val()) <= 10) {
+					$('#Valeur' + (parseInt($('#NombrePosition').val()) - 1)).val(etenduMax);
+				}
+
+			})
+
+
+
+
+
+
+
+			var calesFormsDiv = $('#calesFormsDiv');
+			var calesFormsContainer = $('#calesFormsContainer');
+
+			$('#NombrePosition').on('keyup', function () {
+				if (parseInt($(this).val()) >= 5 && parseInt($(this).val()) <= 10) {
+					generateCalesForms(parseInt($(this).val()));
+					$('#errorMessage').hide();
+					calesFormsDiv.show();
+					$('#submitBtn').attr('disabled', false);
+				} else {
+					$('#errorMessage').show();
+					calesFormsDiv.hide();
+					$('#submitBtn').attr('disabled', true);
+				}
+			});
+
+			function generateCalesForms(number) {
+				var calesForms = '<tr>';
+				var selectedInstrumentSpecifique = $('#InstrumentSpecifiqueId').find(":selected");
+				etenduMax = selectedInstrumentSpecifique.data('etenduMax');
+
+				var caleValeur = "";
+				for (i = 0; i < number; i++) {
+					if (i == (number - 1)) {
+						caleValeur = etenduMax;
+					}
+					calesForms += '<td>\
+										<label class="control-label" for= "Valeur' + i + '" > Cale ' + (i + 1) + '</label >\
+										<input class="form-control text-box single-line" id="Valeur' + i + '" name="Valeur' + i + '" type="text" value="' + caleValeur + '">\
+									</td>';
+				}
+				calesForms += '</tr>';
+				calesFormsContainer.html(calesForms);
+			}
+
+
+
+
+
+
+
+		});
+	</script>
+}

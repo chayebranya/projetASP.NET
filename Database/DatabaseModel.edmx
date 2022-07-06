@@ -1,0 +1,1033 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+    <Schema Namespace="VegeMoteurDBModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="Cale">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Valeur" Type="float" Nullable="false" />
+          <Property Name="NormeId" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="CalendrierCalibrage">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" Nullable="false" />
+          <Property Name="Date" Type="datetime" Nullable="false" />
+          <Property Name="InstrumentSpeicifiqueId" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="CalibrageCale">
+          <Key>
+            <PropertyRef Name="CaleId" />
+            <PropertyRef Name="CalibragId" />
+          </Key>
+          <Property Name="CaleId" Type="int" Nullable="false" />
+          <Property Name="CalibragId" Type="int" Nullable="false" />
+          <Property Name="MesureA" Type="float" />
+          <Property Name="MesureB" Type="float" />
+          <Property Name="EcartA" Type="float" />
+          <Property Name="EcartB" Type="float" />
+          <Property Name="Emax" Type="float" />
+        </EntityType>
+        <EntityType Name="ErreurContactPartiel">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Description" Type="nvarchar" MaxLength="1000" />
+          <Property Name="Date" Type="datetime" />
+          <Property Name="Emax" Type="float" />
+          <Property Name="VerificationId" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="ErreurContactPleineTouche">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Description" Type="nvarchar" MaxLength="1000" />
+          <Property Name="Date" Type="datetime" Nullable="false" />
+          <Property Name="CaleMax" Type="float" />
+          <Property Name="Emax" Type="float" />
+          <Property Name="VerificationId" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="InstrumentGeneral">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="CodeInterne" Type="int" Nullable="false" />
+          <Property Name="Designation" Type="nvarchar" MaxLength="500" Nullable="false" />
+          <Property Name="AEtendu" Type="bit" Nullable="false" />
+          <Property Name="Date" Type="datetime" />
+        </EntityType>
+        <EntityType Name="InstrumentSpecifique">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Code" Type="nvarchar" MaxLength="500" />
+          <Property Name="Precision" Type="float" Nullable="false" />
+          <Property Name="Type" Type="nvarchar" MaxLength="500" Nullable="false" />
+          <Property Name="EtenduMax" Type="float" />
+          <Property Name="EtenduMin" Type="float" />
+          <Property Name="Unite" Type="nvarchar" MaxLength="500" />
+          <Property Name="Caractere" Type="nvarchar" MaxLength="500" />
+          <Property Name="Resolution" Type="float" Nullable="false" />
+          <Property Name="FrequenceCalibrage" Type="int" Nullable="false" />
+          <Property Name="FrequenceEtallonage" Type="int" />
+          <Property Name="DateMiseEnService" Type="datetime" />
+          <Property Name="PostTravailId" Type="int" Nullable="false" />
+          <Property Name="InstrumentGeneralId" Type="int" Nullable="false" />
+          <Property Name="MarqueId" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Marque">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Nom" Type="nvarchar" MaxLength="500" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Norme">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="CodeNorme" Type="nvarchar" MaxLength="500" />
+          <Property Name="NombrePosition" Type="int" Nullable="false" />
+          <Property Name="Actuelle" Type="bit" Nullable="false" />
+          <Property Name="InstrumentSpecifiqueId" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Position">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Nom" Type="nvarchar" MaxLength="500" />
+        </EntityType>
+        <EntityType Name="PosteTravail">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Nom" Type="nvarchar" MaxLength="500" Nullable="false" />
+          <Property Name="SectionId" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Section">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Nom" Type="nvarchar" MaxLength="500" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Verification">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Description" Type="nvarchar" MaxLength="1000" />
+          <Property Name="Date" Type="datetime" />
+          <Property Name="InstrumentSpecifiqueId" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="VerificationPosition">
+          <Key>
+            <PropertyRef Name="PositionId" />
+            <PropertyRef Name="VerificationId" />
+          </Key>
+          <Property Name="PositionId" Type="int" Nullable="false" />
+          <Property Name="VerificationId" Type="int" Nullable="false" />
+          <Property Name="Mesure1" Type="float" />
+          <Property Name="Mesure2" Type="float" />
+          <Property Name="Ecart1" Type="float" />
+          <Property Name="Ecart2" Type="float" />
+        </EntityType>
+        <Association Name="FK_Cale_Norme">
+          <End Role="Norme" Type="Self.Norme" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="Cale" Type="Self.Cale" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Norme">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Cale">
+              <PropertyRef Name="NormeId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_CalendrierCalibrage_InstrumentSpecifique">
+          <End Role="InstrumentSpecifique" Type="Self.InstrumentSpecifique" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="CalendrierCalibrage" Type="Self.CalendrierCalibrage" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="InstrumentSpecifique">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="CalendrierCalibrage">
+              <PropertyRef Name="InstrumentSpeicifiqueId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_CalibrageCale_Cale">
+          <End Role="Cale" Type="Self.Cale" Multiplicity="1" />
+          <End Role="CalibrageCale" Type="Self.CalibrageCale" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Cale">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="CalibrageCale">
+              <PropertyRef Name="CaleId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_CalibrageCale_ErreurContactPleineTouche">
+          <End Role="ErreurContactPleineTouche" Type="Self.ErreurContactPleineTouche" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="CalibrageCale" Type="Self.CalibrageCale" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="ErreurContactPleineTouche">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="CalibrageCale">
+              <PropertyRef Name="CalibragId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_ErreurContactPartiel_Verification">
+          <End Role="Verification" Type="Self.Verification" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="ErreurContactPartiel" Type="Self.ErreurContactPartiel" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Verification">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="ErreurContactPartiel">
+              <PropertyRef Name="VerificationId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_ErreurContactPleineTouche_Verification">
+          <End Role="Verification" Type="Self.Verification" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="ErreurContactPleineTouche" Type="Self.ErreurContactPleineTouche" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Verification">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="ErreurContactPleineTouche">
+              <PropertyRef Name="VerificationId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_InstrumentSpecifique_InstrumentGeneral">
+          <End Role="InstrumentGeneral" Type="Self.InstrumentGeneral" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="InstrumentSpecifique" Type="Self.InstrumentSpecifique" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="InstrumentGeneral">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="InstrumentSpecifique">
+              <PropertyRef Name="InstrumentGeneralId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_InstrumentSpecifique_Marque">
+          <End Role="Marque" Type="Self.Marque" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="InstrumentSpecifique" Type="Self.InstrumentSpecifique" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Marque">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="InstrumentSpecifique">
+              <PropertyRef Name="MarqueId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_InstrumentSpecifique_PosteTravail">
+          <End Role="PosteTravail" Type="Self.PosteTravail" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="InstrumentSpecifique" Type="Self.InstrumentSpecifique" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="PosteTravail">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="InstrumentSpecifique">
+              <PropertyRef Name="PostTravailId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Norme_InstrumentSpecifique">
+          <End Role="InstrumentSpecifique" Type="Self.InstrumentSpecifique" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="Norme" Type="Self.Norme" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="InstrumentSpecifique">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Norme">
+              <PropertyRef Name="InstrumentSpecifiqueId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_PosteTravail_Section">
+          <End Role="Section" Type="Self.Section" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="PosteTravail" Type="Self.PosteTravail" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Section">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="PosteTravail">
+              <PropertyRef Name="SectionId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Verification_InstrumentSpecifique">
+          <End Role="InstrumentSpecifique" Type="Self.InstrumentSpecifique" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="Verification" Type="Self.Verification" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="InstrumentSpecifique">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Verification">
+              <PropertyRef Name="InstrumentSpecifiqueId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_VerificationPosition_ErreurContactPartiel">
+          <End Role="ErreurContactPartiel" Type="Self.ErreurContactPartiel" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="VerificationPosition" Type="Self.VerificationPosition" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="ErreurContactPartiel">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="VerificationPosition">
+              <PropertyRef Name="VerificationId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_VerificationPosition_Position">
+          <End Role="Position" Type="Self.Position" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="VerificationPosition" Type="Self.VerificationPosition" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Position">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="VerificationPosition">
+              <PropertyRef Name="PositionId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="VegeMoteurDBModelStoreContainer">
+          <EntitySet Name="Cale" EntityType="Self.Cale" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="CalendrierCalibrage" EntityType="Self.CalendrierCalibrage" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="CalibrageCale" EntityType="Self.CalibrageCale" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="ErreurContactPartiel" EntityType="Self.ErreurContactPartiel" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="ErreurContactPleineTouche" EntityType="Self.ErreurContactPleineTouche" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="InstrumentGeneral" EntityType="Self.InstrumentGeneral" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="InstrumentSpecifique" EntityType="Self.InstrumentSpecifique" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Marque" EntityType="Self.Marque" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Norme" EntityType="Self.Norme" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Position" EntityType="Self.Position" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="PosteTravail" EntityType="Self.PosteTravail" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Section" EntityType="Self.Section" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Verification" EntityType="Self.Verification" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="VerificationPosition" EntityType="Self.VerificationPosition" Schema="dbo" store:Type="Tables" />
+          <AssociationSet Name="FK_Cale_Norme" Association="Self.FK_Cale_Norme">
+            <End Role="Norme" EntitySet="Norme" />
+            <End Role="Cale" EntitySet="Cale" />
+          </AssociationSet>
+          <AssociationSet Name="FK_CalendrierCalibrage_InstrumentSpecifique" Association="Self.FK_CalendrierCalibrage_InstrumentSpecifique">
+            <End Role="InstrumentSpecifique" EntitySet="InstrumentSpecifique" />
+            <End Role="CalendrierCalibrage" EntitySet="CalendrierCalibrage" />
+          </AssociationSet>
+          <AssociationSet Name="FK_CalibrageCale_Cale" Association="Self.FK_CalibrageCale_Cale">
+            <End Role="Cale" EntitySet="Cale" />
+            <End Role="CalibrageCale" EntitySet="CalibrageCale" />
+          </AssociationSet>
+          <AssociationSet Name="FK_CalibrageCale_ErreurContactPleineTouche" Association="Self.FK_CalibrageCale_ErreurContactPleineTouche">
+            <End Role="ErreurContactPleineTouche" EntitySet="ErreurContactPleineTouche" />
+            <End Role="CalibrageCale" EntitySet="CalibrageCale" />
+          </AssociationSet>
+          <AssociationSet Name="FK_ErreurContactPartiel_Verification" Association="Self.FK_ErreurContactPartiel_Verification">
+            <End Role="Verification" EntitySet="Verification" />
+            <End Role="ErreurContactPartiel" EntitySet="ErreurContactPartiel" />
+          </AssociationSet>
+          <AssociationSet Name="FK_ErreurContactPleineTouche_Verification" Association="Self.FK_ErreurContactPleineTouche_Verification">
+            <End Role="Verification" EntitySet="Verification" />
+            <End Role="ErreurContactPleineTouche" EntitySet="ErreurContactPleineTouche" />
+          </AssociationSet>
+          <AssociationSet Name="FK_InstrumentSpecifique_InstrumentGeneral" Association="Self.FK_InstrumentSpecifique_InstrumentGeneral">
+            <End Role="InstrumentGeneral" EntitySet="InstrumentGeneral" />
+            <End Role="InstrumentSpecifique" EntitySet="InstrumentSpecifique" />
+          </AssociationSet>
+          <AssociationSet Name="FK_InstrumentSpecifique_Marque" Association="Self.FK_InstrumentSpecifique_Marque">
+            <End Role="Marque" EntitySet="Marque" />
+            <End Role="InstrumentSpecifique" EntitySet="InstrumentSpecifique" />
+          </AssociationSet>
+          <AssociationSet Name="FK_InstrumentSpecifique_PosteTravail" Association="Self.FK_InstrumentSpecifique_PosteTravail">
+            <End Role="PosteTravail" EntitySet="PosteTravail" />
+            <End Role="InstrumentSpecifique" EntitySet="InstrumentSpecifique" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Norme_InstrumentSpecifique" Association="Self.FK_Norme_InstrumentSpecifique">
+            <End Role="InstrumentSpecifique" EntitySet="InstrumentSpecifique" />
+            <End Role="Norme" EntitySet="Norme" />
+          </AssociationSet>
+          <AssociationSet Name="FK_PosteTravail_Section" Association="Self.FK_PosteTravail_Section">
+            <End Role="Section" EntitySet="Section" />
+            <End Role="PosteTravail" EntitySet="PosteTravail" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Verification_InstrumentSpecifique" Association="Self.FK_Verification_InstrumentSpecifique">
+            <End Role="InstrumentSpecifique" EntitySet="InstrumentSpecifique" />
+            <End Role="Verification" EntitySet="Verification" />
+          </AssociationSet>
+          <AssociationSet Name="FK_VerificationPosition_ErreurContactPartiel" Association="Self.FK_VerificationPosition_ErreurContactPartiel">
+            <End Role="ErreurContactPartiel" EntitySet="ErreurContactPartiel" />
+            <End Role="VerificationPosition" EntitySet="VerificationPosition" />
+          </AssociationSet>
+          <AssociationSet Name="FK_VerificationPosition_Position" Association="Self.FK_VerificationPosition_Position">
+            <End Role="Position" EntitySet="Position" />
+            <End Role="VerificationPosition" EntitySet="VerificationPosition" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema></edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="VegeMoteurDBModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityContainer Name="VegeMoteurDBEntities" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="Cales" EntityType="VegeMoteurDBModel.Cale" />
+          <EntitySet Name="CalendrierCalibrages" EntityType="VegeMoteurDBModel.CalendrierCalibrage" />
+          <EntitySet Name="InstrumentGenerals" EntityType="VegeMoteurDBModel.InstrumentGeneral" />
+          <EntitySet Name="InstrumentSpecifiques" EntityType="VegeMoteurDBModel.InstrumentSpecifique" />
+          <EntitySet Name="Marques" EntityType="VegeMoteurDBModel.Marque" />
+          <EntitySet Name="Normes" EntityType="VegeMoteurDBModel.Norme" />
+          <EntitySet Name="PosteTravails" EntityType="VegeMoteurDBModel.PosteTravail" />
+          <EntitySet Name="Sections" EntityType="VegeMoteurDBModel.Section" />
+          <AssociationSet Name="FK_Cale_Norme" Association="VegeMoteurDBModel.FK_Cale_Norme">
+            <End Role="Norme" EntitySet="Normes" />
+            <End Role="Cale" EntitySet="Cales" />
+          </AssociationSet>
+          <AssociationSet Name="FK_CalendrierCalibrage_InstrumentSpecifique" Association="VegeMoteurDBModel.FK_CalendrierCalibrage_InstrumentSpecifique">
+            <End Role="InstrumentSpecifique" EntitySet="InstrumentSpecifiques" />
+            <End Role="CalendrierCalibrage" EntitySet="CalendrierCalibrages" />
+          </AssociationSet>
+          <AssociationSet Name="FK_InstrumentSpecifique_InstrumentGeneral" Association="VegeMoteurDBModel.FK_InstrumentSpecifique_InstrumentGeneral">
+            <End Role="InstrumentGeneral" EntitySet="InstrumentGenerals" />
+            <End Role="InstrumentSpecifique" EntitySet="InstrumentSpecifiques" />
+          </AssociationSet>
+          <AssociationSet Name="FK_InstrumentSpecifique_Marque" Association="VegeMoteurDBModel.FK_InstrumentSpecifique_Marque">
+            <End Role="Marque" EntitySet="Marques" />
+            <End Role="InstrumentSpecifique" EntitySet="InstrumentSpecifiques" />
+          </AssociationSet>
+          <AssociationSet Name="FK_InstrumentSpecifique_PosteTravail" Association="VegeMoteurDBModel.FK_InstrumentSpecifique_PosteTravail">
+            <End Role="PosteTravail" EntitySet="PosteTravails" />
+            <End Role="InstrumentSpecifique" EntitySet="InstrumentSpecifiques" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Norme_InstrumentSpecifique" Association="VegeMoteurDBModel.FK_Norme_InstrumentSpecifique">
+            <End Role="InstrumentSpecifique" EntitySet="InstrumentSpecifiques" />
+            <End Role="Norme" EntitySet="Normes" />
+          </AssociationSet>
+          <AssociationSet Name="FK_PosteTravail_Section" Association="VegeMoteurDBModel.FK_PosteTravail_Section">
+            <End Role="Section" EntitySet="Sections" />
+            <End Role="PosteTravail" EntitySet="PosteTravails" />
+          </AssociationSet>
+          <EntitySet Name="CalibrageCales" EntityType="VegeMoteurDBModel.CalibrageCale" />
+          <EntitySet Name="ErreurContactPartiels" EntityType="VegeMoteurDBModel.ErreurContactPartiel" />
+          <EntitySet Name="ErreurContactPleineTouches" EntityType="VegeMoteurDBModel.ErreurContactPleineTouche" />
+          <EntitySet Name="Positions" EntityType="VegeMoteurDBModel.Position" />
+          <EntitySet Name="Verifications" EntityType="VegeMoteurDBModel.Verification" />
+          <EntitySet Name="VerificationPositions" EntityType="VegeMoteurDBModel.VerificationPosition" />
+          <AssociationSet Name="FK_CalibrageCale_Cale" Association="VegeMoteurDBModel.FK_CalibrageCale_Cale">
+            <End Role="Cale" EntitySet="Cales" />
+            <End Role="CalibrageCale" EntitySet="CalibrageCales" />
+          </AssociationSet>
+          <AssociationSet Name="FK_CalibrageCale_ErreurContactPleineTouche" Association="VegeMoteurDBModel.FK_CalibrageCale_ErreurContactPleineTouche">
+            <End Role="ErreurContactPleineTouche" EntitySet="ErreurContactPleineTouches" />
+            <End Role="CalibrageCale" EntitySet="CalibrageCales" />
+          </AssociationSet>
+          <AssociationSet Name="FK_ErreurContactPartiel_Verification" Association="VegeMoteurDBModel.FK_ErreurContactPartiel_Verification">
+            <End Role="Verification" EntitySet="Verifications" />
+            <End Role="ErreurContactPartiel" EntitySet="ErreurContactPartiels" />
+          </AssociationSet>
+          <AssociationSet Name="FK_VerificationPosition_ErreurContactPartiel" Association="VegeMoteurDBModel.FK_VerificationPosition_ErreurContactPartiel">
+            <End Role="ErreurContactPartiel" EntitySet="ErreurContactPartiels" />
+            <End Role="VerificationPosition" EntitySet="VerificationPositions" />
+          </AssociationSet>
+          <AssociationSet Name="FK_ErreurContactPleineTouche_Verification" Association="VegeMoteurDBModel.FK_ErreurContactPleineTouche_Verification">
+            <End Role="Verification" EntitySet="Verifications" />
+            <End Role="ErreurContactPleineTouche" EntitySet="ErreurContactPleineTouches" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Verification_InstrumentSpecifique" Association="VegeMoteurDBModel.FK_Verification_InstrumentSpecifique">
+            <End Role="InstrumentSpecifique" EntitySet="InstrumentSpecifiques" />
+            <End Role="Verification" EntitySet="Verifications" />
+          </AssociationSet>
+          <AssociationSet Name="FK_VerificationPosition_Position" Association="VegeMoteurDBModel.FK_VerificationPosition_Position">
+            <End Role="Position" EntitySet="Positions" />
+            <End Role="VerificationPosition" EntitySet="VerificationPositions" />
+          </AssociationSet>
+          </EntityContainer>
+        <EntityType Name="Cale">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Valeur" Type="Double" Nullable="false" />
+          <Property Name="NormeId" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="Norme" Relationship="VegeMoteurDBModel.FK_Cale_Norme" FromRole="Cale" ToRole="Norme" />
+          <NavigationProperty Name="CalibrageCales" Relationship="VegeMoteurDBModel.FK_CalibrageCale_Cale" FromRole="Cale" ToRole="CalibrageCale" />
+        </EntityType>
+        <EntityType Name="CalendrierCalibrage">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" />
+          <Property Name="Date" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="InstrumentSpeicifiqueId" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="InstrumentSpecifique" Relationship="VegeMoteurDBModel.FK_CalendrierCalibrage_InstrumentSpecifique" FromRole="CalendrierCalibrage" ToRole="InstrumentSpecifique" />
+        </EntityType>
+        <EntityType Name="InstrumentGeneral">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="CodeInterne" Type="Int32" Nullable="false" />
+          <Property Name="Designation" Type="String" Nullable="false" MaxLength="500" FixedLength="false" Unicode="true" />
+          <Property Name="AEtendu" Type="Boolean" Nullable="false" />
+          <Property Name="Date" Type="DateTime" Precision="3" />
+          <NavigationProperty Name="InstrumentSpecifiques" Relationship="VegeMoteurDBModel.FK_InstrumentSpecifique_InstrumentGeneral" FromRole="InstrumentGeneral" ToRole="InstrumentSpecifique" />
+        </EntityType>
+        <EntityType Name="InstrumentSpecifique">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Code" Type="String" MaxLength="500" FixedLength="false" Unicode="true" />
+          <Property Name="Precision" Type="Double" Nullable="false" />
+          <Property Name="Type" Type="String" Nullable="false" MaxLength="500" FixedLength="false" Unicode="true" />
+          <Property Name="EtenduMax" Type="Double" />
+          <Property Name="EtenduMin" Type="Double" />
+          <Property Name="Unite" Type="String" MaxLength="500" FixedLength="false" Unicode="true" />
+          <Property Name="Caractere" Type="String" MaxLength="500" FixedLength="false" Unicode="true" />
+          <Property Name="Resolution" Type="Double" Nullable="false" />
+          <Property Name="FrequenceCalibrage" Type="Int32" Nullable="false" />
+          <Property Name="FrequenceEtallonage" Type="Int32" />
+          <Property Name="DateMiseEnService" Type="DateTime" Precision="3" />
+          <Property Name="PostTravailId" Type="Int32" Nullable="false" />
+          <Property Name="InstrumentGeneralId" Type="Int32" Nullable="false" />
+          <Property Name="MarqueId" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="CalendrierCalibrages" Relationship="VegeMoteurDBModel.FK_CalendrierCalibrage_InstrumentSpecifique" FromRole="InstrumentSpecifique" ToRole="CalendrierCalibrage" />
+          <NavigationProperty Name="InstrumentGeneral" Relationship="VegeMoteurDBModel.FK_InstrumentSpecifique_InstrumentGeneral" FromRole="InstrumentSpecifique" ToRole="InstrumentGeneral" />
+          <NavigationProperty Name="Marque" Relationship="VegeMoteurDBModel.FK_InstrumentSpecifique_Marque" FromRole="InstrumentSpecifique" ToRole="Marque" />
+          <NavigationProperty Name="PosteTravail" Relationship="VegeMoteurDBModel.FK_InstrumentSpecifique_PosteTravail" FromRole="InstrumentSpecifique" ToRole="PosteTravail" />
+          <NavigationProperty Name="Normes" Relationship="VegeMoteurDBModel.FK_Norme_InstrumentSpecifique" FromRole="InstrumentSpecifique" ToRole="Norme" />
+          <NavigationProperty Name="Verifications" Relationship="VegeMoteurDBModel.FK_Verification_InstrumentSpecifique" FromRole="InstrumentSpecifique" ToRole="Verification" />
+        </EntityType>
+        <EntityType Name="Marque">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Nom" Type="String" Nullable="false" MaxLength="500" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="InstrumentSpecifiques" Relationship="VegeMoteurDBModel.FK_InstrumentSpecifique_Marque" FromRole="Marque" ToRole="InstrumentSpecifique" />
+        </EntityType>
+        <EntityType Name="Norme">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="CodeNorme" Type="String" MaxLength="500" FixedLength="false" Unicode="true" />
+          <Property Name="NombrePosition" Type="Int32" Nullable="false" />
+          <Property Name="Actuelle" Type="Boolean" Nullable="false" />
+          <Property Name="InstrumentSpecifiqueId" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="Cales" Relationship="VegeMoteurDBModel.FK_Cale_Norme" FromRole="Norme" ToRole="Cale" />
+          <NavigationProperty Name="InstrumentSpecifique" Relationship="VegeMoteurDBModel.FK_Norme_InstrumentSpecifique" FromRole="Norme" ToRole="InstrumentSpecifique" />
+        </EntityType>
+        <EntityType Name="PosteTravail">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Nom" Type="String" Nullable="false" MaxLength="500" FixedLength="false" Unicode="true" />
+          <Property Name="SectionId" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="InstrumentSpecifiques" Relationship="VegeMoteurDBModel.FK_InstrumentSpecifique_PosteTravail" FromRole="PosteTravail" ToRole="InstrumentSpecifique" />
+          <NavigationProperty Name="Section" Relationship="VegeMoteurDBModel.FK_PosteTravail_Section" FromRole="PosteTravail" ToRole="Section" />
+        </EntityType>
+        <EntityType Name="Section">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Nom" Type="String" Nullable="false" MaxLength="500" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="PosteTravails" Relationship="VegeMoteurDBModel.FK_PosteTravail_Section" FromRole="Section" ToRole="PosteTravail" />
+        </EntityType>
+        <Association Name="FK_Cale_Norme">
+          <End Type="VegeMoteurDBModel.Norme" Role="Norme" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Type="VegeMoteurDBModel.Cale" Role="Cale" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Norme">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Cale">
+              <PropertyRef Name="NormeId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_CalendrierCalibrage_InstrumentSpecifique">
+          <End Type="VegeMoteurDBModel.InstrumentSpecifique" Role="InstrumentSpecifique" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Type="VegeMoteurDBModel.CalendrierCalibrage" Role="CalendrierCalibrage" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="InstrumentSpecifique">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="CalendrierCalibrage">
+              <PropertyRef Name="InstrumentSpeicifiqueId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_InstrumentSpecifique_InstrumentGeneral">
+          <End Type="VegeMoteurDBModel.InstrumentGeneral" Role="InstrumentGeneral" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Type="VegeMoteurDBModel.InstrumentSpecifique" Role="InstrumentSpecifique" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="InstrumentGeneral">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="InstrumentSpecifique">
+              <PropertyRef Name="InstrumentGeneralId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_InstrumentSpecifique_Marque">
+          <End Type="VegeMoteurDBModel.Marque" Role="Marque" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Type="VegeMoteurDBModel.InstrumentSpecifique" Role="InstrumentSpecifique" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Marque">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="InstrumentSpecifique">
+              <PropertyRef Name="MarqueId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_InstrumentSpecifique_PosteTravail">
+          <End Type="VegeMoteurDBModel.PosteTravail" Role="PosteTravail" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Type="VegeMoteurDBModel.InstrumentSpecifique" Role="InstrumentSpecifique" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="PosteTravail">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="InstrumentSpecifique">
+              <PropertyRef Name="PostTravailId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Norme_InstrumentSpecifique">
+          <End Type="VegeMoteurDBModel.InstrumentSpecifique" Role="InstrumentSpecifique" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Type="VegeMoteurDBModel.Norme" Role="Norme" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="InstrumentSpecifique">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Norme">
+              <PropertyRef Name="InstrumentSpecifiqueId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_PosteTravail_Section">
+          <End Type="VegeMoteurDBModel.Section" Role="Section" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Type="VegeMoteurDBModel.PosteTravail" Role="PosteTravail" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Section">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="PosteTravail">
+              <PropertyRef Name="SectionId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityType Name="CalibrageCale">
+          <Key>
+            <PropertyRef Name="CaleId" />
+            <PropertyRef Name="CalibragId" />
+          </Key>
+          <Property Name="CaleId" Type="Int32" Nullable="false" />
+          <Property Name="CalibragId" Type="Int32" Nullable="false" />
+          <Property Name="MesureA" Type="Double" />
+          <Property Name="MesureB" Type="Double" />
+          <Property Name="EcartA" Type="Double" />
+          <Property Name="EcartB" Type="Double" />
+          <Property Name="Emax" Type="Double" />
+          <NavigationProperty Name="Cale" Relationship="VegeMoteurDBModel.FK_CalibrageCale_Cale" FromRole="CalibrageCale" ToRole="Cale" />
+          <NavigationProperty Name="ErreurContactPleineTouche" Relationship="VegeMoteurDBModel.FK_CalibrageCale_ErreurContactPleineTouche" FromRole="CalibrageCale" ToRole="ErreurContactPleineTouche" />
+        </EntityType>
+        <EntityType Name="ErreurContactPartiel">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Description" Type="String" MaxLength="1000" FixedLength="false" Unicode="true" />
+          <Property Name="Date" Type="DateTime" Precision="3" />
+          <Property Name="Emax" Type="Double" />
+          <Property Name="VerificationId" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="Verification" Relationship="VegeMoteurDBModel.FK_ErreurContactPartiel_Verification" FromRole="ErreurContactPartiel" ToRole="Verification" />
+          <NavigationProperty Name="VerificationPositions" Relationship="VegeMoteurDBModel.FK_VerificationPosition_ErreurContactPartiel" FromRole="ErreurContactPartiel" ToRole="VerificationPosition" />
+        </EntityType>
+        <EntityType Name="ErreurContactPleineTouche">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Description" Type="String" MaxLength="1000" FixedLength="false" Unicode="true" />
+          <Property Name="Date" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="CaleMax" Type="Double" />
+          <Property Name="Emax" Type="Double" />
+          <Property Name="VerificationId" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="CalibrageCales" Relationship="VegeMoteurDBModel.FK_CalibrageCale_ErreurContactPleineTouche" FromRole="ErreurContactPleineTouche" ToRole="CalibrageCale" />
+          <NavigationProperty Name="Verification" Relationship="VegeMoteurDBModel.FK_ErreurContactPleineTouche_Verification" FromRole="ErreurContactPleineTouche" ToRole="Verification" />
+        </EntityType>
+        <EntityType Name="Position">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Nom" Type="String" MaxLength="500" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="VerificationPositions" Relationship="VegeMoteurDBModel.FK_VerificationPosition_Position" FromRole="Position" ToRole="VerificationPosition" />
+        </EntityType>
+        <EntityType Name="Verification">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Description" Type="String" MaxLength="1000" FixedLength="false" Unicode="true" />
+          <Property Name="InstrumentSpecifiqueId" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="ErreurContactPartiels" Relationship="VegeMoteurDBModel.FK_ErreurContactPartiel_Verification" FromRole="Verification" ToRole="ErreurContactPartiel" />
+          <NavigationProperty Name="ErreurContactPleineTouches" Relationship="VegeMoteurDBModel.FK_ErreurContactPleineTouche_Verification" FromRole="Verification" ToRole="ErreurContactPleineTouche" />
+          <NavigationProperty Name="InstrumentSpecifique" Relationship="VegeMoteurDBModel.FK_Verification_InstrumentSpecifique" FromRole="Verification" ToRole="InstrumentSpecifique" />
+          <Property Name="Date" Type="DateTime" Precision="3" />
+        </EntityType>
+        <EntityType Name="VerificationPosition">
+          <Key>
+            <PropertyRef Name="PositionId" />
+            <PropertyRef Name="VerificationId" />
+          </Key>
+          <Property Name="PositionId" Type="Int32" Nullable="false" />
+          <Property Name="VerificationId" Type="Int32" Nullable="false" />
+          <Property Name="Mesure1" Type="Double" />
+          <Property Name="Mesure2" Type="Double" />
+          <Property Name="Ecart1" Type="Double" />
+          <Property Name="Ecart2" Type="Double" />
+          <NavigationProperty Name="ErreurContactPartiel" Relationship="VegeMoteurDBModel.FK_VerificationPosition_ErreurContactPartiel" FromRole="VerificationPosition" ToRole="ErreurContactPartiel" />
+          <NavigationProperty Name="Position" Relationship="VegeMoteurDBModel.FK_VerificationPosition_Position" FromRole="VerificationPosition" ToRole="Position" />
+        </EntityType>
+        <Association Name="FK_CalibrageCale_Cale">
+          <End Type="VegeMoteurDBModel.Cale" Role="Cale" Multiplicity="1" />
+          <End Type="VegeMoteurDBModel.CalibrageCale" Role="CalibrageCale" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Cale">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="CalibrageCale">
+              <PropertyRef Name="CaleId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_CalibrageCale_ErreurContactPleineTouche">
+          <End Type="VegeMoteurDBModel.ErreurContactPleineTouche" Role="ErreurContactPleineTouche" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Type="VegeMoteurDBModel.CalibrageCale" Role="CalibrageCale" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="ErreurContactPleineTouche">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="CalibrageCale">
+              <PropertyRef Name="CalibragId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_ErreurContactPartiel_Verification">
+          <End Type="VegeMoteurDBModel.Verification" Role="Verification" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Type="VegeMoteurDBModel.ErreurContactPartiel" Role="ErreurContactPartiel" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Verification">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="ErreurContactPartiel">
+              <PropertyRef Name="VerificationId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_VerificationPosition_ErreurContactPartiel">
+          <End Type="VegeMoteurDBModel.ErreurContactPartiel" Role="ErreurContactPartiel" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Type="VegeMoteurDBModel.VerificationPosition" Role="VerificationPosition" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="ErreurContactPartiel">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="VerificationPosition">
+              <PropertyRef Name="VerificationId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_ErreurContactPleineTouche_Verification">
+          <End Type="VegeMoteurDBModel.Verification" Role="Verification" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Type="VegeMoteurDBModel.ErreurContactPleineTouche" Role="ErreurContactPleineTouche" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Verification">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="ErreurContactPleineTouche">
+              <PropertyRef Name="VerificationId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Verification_InstrumentSpecifique">
+          <End Type="VegeMoteurDBModel.InstrumentSpecifique" Role="InstrumentSpecifique" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Type="VegeMoteurDBModel.Verification" Role="Verification" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="InstrumentSpecifique">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Verification">
+              <PropertyRef Name="InstrumentSpecifiqueId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_VerificationPosition_Position">
+          <End Type="VegeMoteurDBModel.Position" Role="Position" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Type="VegeMoteurDBModel.VerificationPosition" Role="VerificationPosition" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Position">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="VerificationPosition">
+              <PropertyRef Name="PositionId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="VegeMoteurDBModelStoreContainer" CdmEntityContainer="VegeMoteurDBEntities">
+          <EntitySetMapping Name="Cales">
+            <EntityTypeMapping TypeName="VegeMoteurDBModel.Cale">
+              <MappingFragment StoreEntitySet="Cale">
+                <ScalarProperty Name="NormeId" ColumnName="NormeId" />
+                <ScalarProperty Name="Valeur" ColumnName="Valeur" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="CalendrierCalibrages">
+            <EntityTypeMapping TypeName="VegeMoteurDBModel.CalendrierCalibrage">
+              <MappingFragment StoreEntitySet="CalendrierCalibrage">
+                <ScalarProperty Name="InstrumentSpeicifiqueId" ColumnName="InstrumentSpeicifiqueId" />
+                <ScalarProperty Name="Date" ColumnName="Date" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="InstrumentGenerals">
+            <EntityTypeMapping TypeName="VegeMoteurDBModel.InstrumentGeneral">
+              <MappingFragment StoreEntitySet="InstrumentGeneral">
+                <ScalarProperty Name="Date" ColumnName="Date" />
+                <ScalarProperty Name="AEtendu" ColumnName="AEtendu" />
+                <ScalarProperty Name="Designation" ColumnName="Designation" />
+                <ScalarProperty Name="CodeInterne" ColumnName="CodeInterne" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="InstrumentSpecifiques">
+            <EntityTypeMapping TypeName="VegeMoteurDBModel.InstrumentSpecifique">
+              <MappingFragment StoreEntitySet="InstrumentSpecifique">
+                <ScalarProperty Name="MarqueId" ColumnName="MarqueId" />
+                <ScalarProperty Name="InstrumentGeneralId" ColumnName="InstrumentGeneralId" />
+                <ScalarProperty Name="PostTravailId" ColumnName="PostTravailId" />
+                <ScalarProperty Name="DateMiseEnService" ColumnName="DateMiseEnService" />
+                <ScalarProperty Name="FrequenceEtallonage" ColumnName="FrequenceEtallonage" />
+                <ScalarProperty Name="FrequenceCalibrage" ColumnName="FrequenceCalibrage" />
+                <ScalarProperty Name="Resolution" ColumnName="Resolution" />
+                <ScalarProperty Name="Caractere" ColumnName="Caractere" />
+                <ScalarProperty Name="Unite" ColumnName="Unite" />
+                <ScalarProperty Name="EtenduMin" ColumnName="EtenduMin" />
+                <ScalarProperty Name="EtenduMax" ColumnName="EtenduMax" />
+                <ScalarProperty Name="Type" ColumnName="Type" />
+                <ScalarProperty Name="Precision" ColumnName="Precision" />
+                <ScalarProperty Name="Code" ColumnName="Code" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Marques">
+            <EntityTypeMapping TypeName="VegeMoteurDBModel.Marque">
+              <MappingFragment StoreEntitySet="Marque">
+                <ScalarProperty Name="Nom" ColumnName="Nom" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Normes">
+            <EntityTypeMapping TypeName="VegeMoteurDBModel.Norme">
+              <MappingFragment StoreEntitySet="Norme">
+                <ScalarProperty Name="InstrumentSpecifiqueId" ColumnName="InstrumentSpecifiqueId" />
+                <ScalarProperty Name="Actuelle" ColumnName="Actuelle" />
+                <ScalarProperty Name="NombrePosition" ColumnName="NombrePosition" />
+                <ScalarProperty Name="CodeNorme" ColumnName="CodeNorme" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="PosteTravails">
+            <EntityTypeMapping TypeName="VegeMoteurDBModel.PosteTravail">
+              <MappingFragment StoreEntitySet="PosteTravail">
+                <ScalarProperty Name="SectionId" ColumnName="SectionId" />
+                <ScalarProperty Name="Nom" ColumnName="Nom" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Sections">
+            <EntityTypeMapping TypeName="VegeMoteurDBModel.Section">
+              <MappingFragment StoreEntitySet="Section">
+                <ScalarProperty Name="Nom" ColumnName="Nom" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="CalibrageCales">
+            <EntityTypeMapping TypeName="VegeMoteurDBModel.CalibrageCale">
+              <MappingFragment StoreEntitySet="CalibrageCale">
+                <ScalarProperty Name="Emax" ColumnName="Emax" />
+                <ScalarProperty Name="EcartB" ColumnName="EcartB" />
+                <ScalarProperty Name="EcartA" ColumnName="EcartA" />
+                <ScalarProperty Name="MesureB" ColumnName="MesureB" />
+                <ScalarProperty Name="MesureA" ColumnName="MesureA" />
+                <ScalarProperty Name="CalibragId" ColumnName="CalibragId" />
+                <ScalarProperty Name="CaleId" ColumnName="CaleId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="ErreurContactPartiels">
+            <EntityTypeMapping TypeName="VegeMoteurDBModel.ErreurContactPartiel">
+              <MappingFragment StoreEntitySet="ErreurContactPartiel">
+                <ScalarProperty Name="VerificationId" ColumnName="VerificationId" />
+                <ScalarProperty Name="Emax" ColumnName="Emax" />
+                <ScalarProperty Name="Date" ColumnName="Date" />
+                <ScalarProperty Name="Description" ColumnName="Description" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="ErreurContactPleineTouches">
+            <EntityTypeMapping TypeName="VegeMoteurDBModel.ErreurContactPleineTouche">
+              <MappingFragment StoreEntitySet="ErreurContactPleineTouche">
+                <ScalarProperty Name="VerificationId" ColumnName="VerificationId" />
+                <ScalarProperty Name="Emax" ColumnName="Emax" />
+                <ScalarProperty Name="CaleMax" ColumnName="CaleMax" />
+                <ScalarProperty Name="Date" ColumnName="Date" />
+                <ScalarProperty Name="Description" ColumnName="Description" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Positions">
+            <EntityTypeMapping TypeName="VegeMoteurDBModel.Position">
+              <MappingFragment StoreEntitySet="Position">
+                <ScalarProperty Name="Nom" ColumnName="Nom" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Verifications">
+            <EntityTypeMapping TypeName="VegeMoteurDBModel.Verification">
+              <MappingFragment StoreEntitySet="Verification">
+                <ScalarProperty Name="Date" ColumnName="Date" />
+                <ScalarProperty Name="InstrumentSpecifiqueId" ColumnName="InstrumentSpecifiqueId" />
+                <ScalarProperty Name="Description" ColumnName="Description" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="VerificationPositions">
+            <EntityTypeMapping TypeName="VegeMoteurDBModel.VerificationPosition">
+              <MappingFragment StoreEntitySet="VerificationPosition">
+                <ScalarProperty Name="Ecart2" ColumnName="Ecart2" />
+                <ScalarProperty Name="Ecart1" ColumnName="Ecart1" />
+                <ScalarProperty Name="Mesure2" ColumnName="Mesure2" />
+                <ScalarProperty Name="Mesure1" ColumnName="Mesure1" />
+                <ScalarProperty Name="VerificationId" ColumnName="VerificationId" />
+                <ScalarProperty Name="PositionId" ColumnName="PositionId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="true" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="false" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="None" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>

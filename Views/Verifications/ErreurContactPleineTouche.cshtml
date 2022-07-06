@@ -1,0 +1,199 @@
+﻿@model VegeMoteur.App.Database.InstrumentSpecifique
+@using VegeMoteur.App.Database;
+
+@{
+    ViewBag.Title = "Erreur de Contact Pleine Touche";
+    Norme normeActuelle = Model.Normes.Where(n => n.Actuelle).FirstOrDefault();
+}
+@Scripts.Render("~/bundles/jquery")
+    <form action="/verifications/ErreurContactPleineToucheSave" method="post">
+        <h2>Vérification</h2>
+        <label class="control-label">Description</label>
+        <input type="text" class="form-control" name="Description" value="Vérification - @DateTime.Now.ToString("dd MMMM yyyy")">
+        <hr />
+        <h4>Etape 1</h4>
+        <h5>Erreur de Contact Pleine Touche</h5>
+        <input type="text" value="@Model.Id" name="InstrumentSpecifiqueId" />
+        <table class="table table-bordered">
+            <tr>
+                <th style="white-space: nowrap">
+                    Valeur conventionnellement vraie (Vc) (cale)
+                </th>
+                @{
+                    int index = 0;
+                }
+                @foreach (var cale in normeActuelle.Cales)
+                {
+                    <td>
+                        @cale.Valeur
+                        <input type="hidden" class="form-control" id="cale-@(index++)" value="@cale.Valeur" data-id="@cale.Id" />
+                    </td>
+                }
+            </tr>
+            <tr>
+                <th>
+                    Mesure A
+                </th>
+                @{
+                    index = 0;
+                }
+                @foreach (var cale in normeActuelle.Cales)
+                {
+                    <td>
+                        <input type="text" class="form-control mesureA" id="mesureA-@index" data-index="@index" name="mesureA-@cale.Id" />
+                        <span id="mesureAMessage-@index" class="text-danger"></span>
+                        <span>
+                            @{ index++; }
+                        </span>
+                    </td>
+                }
+            </tr>
+            <tr>
+                <th>
+                    Mesure B
+                </th>
+                @{index = 0;}
+                @foreach (var cale in normeActuelle.Cales)
+                {
+                    <td>
+                        <input type="text" class="form-control mesureB" id="mesureB-@index" data-index="@index" name="mesureB-@cale.Id" disabled />
+                        <span id="mesureBMessage-@index" class="text-danger"></span>
+                        <span>
+                            @{ index += 1; }
+                        </span>
+                    </td>
+
+                }
+            </tr>
+
+            <tr>
+                <th>
+                    Ecart A
+                </th>
+                @{index = 0;}
+                @foreach (var cale in normeActuelle.Cales)
+                {
+                    <td>
+                        <input type="text" class="form-control" id="ecartA-@index" name="ecartA-@cale.Id" readonly />
+
+                        <span>
+                            @{index += 1;}
+                        </span>
+                    </td>
+                }
+            </tr>
+            <tr>
+                <th>
+                    Ecart B
+                </th>
+                @{index = 0;}
+                @foreach (var cale in normeActuelle.Cales)
+                {
+                    <td>
+                        <input type="text" class="form-control" id="ecartB-@index" name="ecartB-@cale.Id" readonly />
+
+                        <span>
+                            @{index += 1;}
+                        </span>
+                    </td>
+                }
+            </tr>
+            <tr>
+                <th>
+                    Emax(j)
+                </th>
+                @{index = 0;}
+                @foreach (var cale in normeActuelle.Cales)
+                {
+                    <td>
+                        <input type="text" class="form-control Emax" id="Emax-@index" readonly />
+
+                        <span>
+                            @{index += 1;}
+                        </span>
+                    </td>
+                }
+            </tr>
+        </table>
+        <hr />
+        <table class="table table-bordered" style="width:400px">
+            <tr>
+                <th>
+                    Emax
+                </th>
+                <td>
+                    <input id="Emax" type="text" class="form-control" name="Emax" readonly>
+                </td>
+            </tr>
+            <tr>
+                <th>
+                    Cale
+                </th>
+                <td>
+                    <input id="caleMax" type="text" class="form-control" name="CaleMax" readonly>
+                </td>
+            </tr>
+
+        </table>
+        <button type="submit" class="btn btn-success">Sauvegarder et continuer</button>
+    </form>
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+    <script>
+        $(document).ready(function () {
+            $('.mesureA').on('keyup', function () {
+                var val = $(this).val();
+                var index = $(this).data('index');
+                if (isNaN(val) || val === '') {
+                    $('#mesureAMessage-' + index).html("Valeur n'est pas valide.");
+                    $('#mesureB-' + index).attr('disabled', true);
+                    $('#ecartA-' + index).val('');
+                } else {
+                    $('#mesureB-' + index).attr('disabled', false);
+                    $('#mesureAMessage-' + index).html("");
+                    $('#ecartA-' + index).val(Math.abs(parseFloat($('#cale-' + index).val()) - parseFloat(val)));
+                }
+            });
+
+            $('.mesureB').on('keyup', function () {
+                var val = $(this).val();
+                var index = $(this).data('index');
+                if (isNaN(val) || val === '') {
+                    $('#mesureBMessage-' + index).html("Valeur n'est pas valide.")
+                    $('#ecartB-' + index).val('');
+                } else {
+                    $('#mesureBMessage-' + index).html("");
+                    $('#ecartB-' + index).val(Math.abs(parseFloat($('#mesureA-' + index).val()) - parseFloat(val)));
+                    var ecartA = $('#ecartA-' + index).val();
+                    var ecartB = $('#ecartB-' + index).val();
+
+                    $('#Emax-' + index).val(Math.max(ecartA, ecartB)).change();
+                }
+            });
+
+
+            var calesCount = parseInt('@normeActuelle.Cales.Count()');
+            $('.Emax').on('change', function () {
+                var EmaxValues = [];
+                for (i = 0; i < calesCount; i++) {
+
+                    if (isNaN($('#Emax-' + i).val()) || $('#Emax-' + i).val() === '') {
+                        EmaxValues.push(0);
+                    } else {
+                        EmaxValues.push(parseInt($('#Emax-' + i).val()));
+                    }
+                }
+
+                $('#Emax').val(Math.max(...EmaxValues));
+                let indexCaleMax = EmaxValues.indexOf(Math.max(...EmaxValues));
+
+                $('#caleMax').val($('#cale-' + indexCaleMax).val());
+            });
+
+            function validerToutesValeurs() {
+
+            }
+
+        });
+    </script>
+}

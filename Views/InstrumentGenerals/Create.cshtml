@@ -1,0 +1,56 @@
+﻿@model VegeMoteur.App.Database.InstrumentGeneral
+
+@{
+    ViewBag.Title = "Create";
+}
+
+<h4>Create Instrument General</h4>
+
+
+@using (Html.BeginForm()) 
+{
+    @Html.AntiForgeryToken()
+    
+    <div>
+        
+        <hr />
+        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+        <div class="form-group">
+            @Html.LabelFor(model => model.CodeInterne, htmlAttributes: new { @class = "control-label" })
+                @Html.EditorFor(model => model.CodeInterne, new { htmlAttributes = new { @class = "form-control" } })
+			@Html.ValidationMessageFor(model => model.CodeInterne, "", new { @class = "text-danger" })
+            
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.Designation, htmlAttributes: new { @class = "control-label" })
+                @Html.EditorFor(model => model.Designation, new { htmlAttributes = new { @class = "form-control" } })
+			@Html.ValidationMessageFor(model => model.Designation, "", new { @class = "text-danger" })
+            
+        </div>
+
+        <div class="form-group">
+           
+			<div class="checkbox">
+				@Html.EditorFor(model => model.AEtendu)
+				@Html.LabelFor(model => model.AEtendu, "A Etendu", htmlAttributes: new { @class = "control-label" })
+				@Html.ValidationMessageFor(model => model.AEtendu, "", new { @class = "text-danger" })
+			</div>
+            
+        </div>
+
+      
+
+        <div class="form-group">            
+			<input type="submit" value="Create" class="btn btn-primary" />           
+        </div>
+    </div>
+}
+
+<div>
+    @Html.ActionLink("Back to List", "Index")
+</div>
+
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+}

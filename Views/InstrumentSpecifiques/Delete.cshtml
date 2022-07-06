@@ -1,0 +1,174 @@
+﻿@model VegeMoteur.App.Database.InstrumentSpecifique
+
+@{
+    ViewBag.Title = "Delete";
+}
+
+<h4>Delete</h4>
+
+<b>Are you sure you want to delete this?</b>
+<div>
+    <b>InstrumentSpecifique</b>
+    <hr />
+    <table class="table table-hover">
+		<tr>
+			<th>
+				@Html.DisplayNameFor(model => model.Code)
+			</th>
+
+			<td>
+				@Html.DisplayFor(model => model.Code)
+			</td>
+		</tr>
+
+		<tr>
+			<th>
+				@Html.DisplayNameFor(model => model.Precision)
+			</th>
+
+			<td>
+				@Html.DisplayFor(model => model.Precision)
+			</td>
+		</tr>
+
+		<tr>
+			<th>
+				@Html.DisplayNameFor(model => model.Type)
+			</th>
+
+			<td>
+				@Html.DisplayFor(model => model.Type)
+			</td>
+		</tr>
+
+		<tr>
+			<th>
+				@Html.DisplayNameFor(model => model.EtenduMax)
+			</th>
+
+			<td>
+				@Html.DisplayFor(model => model.EtenduMax)
+			</td>
+		</tr>
+
+		<tr>
+			<th>
+				@Html.DisplayNameFor(model => model.EtenduMin)
+			</th>
+
+			<td>
+				@Html.DisplayFor(model => model.EtenduMin)
+			</td>
+		</tr>
+
+		<tr>
+			<th>
+				@Html.DisplayNameFor(model => model.Unite)
+			</th>
+
+			<td>
+				@Html.DisplayFor(model => model.Unite)
+			</td>
+		</tr>
+
+		<tr>
+			<th>
+				@Html.DisplayNameFor(model => model.Caractere)
+			</th>
+
+			<td>
+				@Html.DisplayFor(model => model.Caractere)
+			</td>
+		</tr>
+
+		<tr>
+			<th>
+				@Html.DisplayNameFor(model => model.Resolution)
+			</th>
+
+			<td>
+				@Html.DisplayFor(model => model.Resolution)
+			</td>
+		</tr>
+
+		<tr>
+			<th>
+				@Html.DisplayNameFor(model => model.FrequenceCalibrage)
+			</th>
+
+			<td>
+				@Html.DisplayFor(model => model.FrequenceCalibrage)
+			</td>
+		</tr>
+
+		<tr>
+			<th>
+				@Html.DisplayNameFor(model => model.FrequenceEtallonage)
+			</th>
+
+			<td>
+				@Html.DisplayFor(model => model.FrequenceEtallonage)
+			</td>
+		</tr>
+
+		<tr>
+			<th>
+				@Html.DisplayNameFor(model => model.DateMiseEnService)
+			</th>
+
+			<td>
+				@Html.DisplayFor(model => model.DateMiseEnService)
+			</td>
+		</tr>
+
+		<tr>
+			<th>
+				@Html.DisplayNameFor(model => model.InstrumentGeneral.Designation)
+			</th>
+
+			<td>
+				@Html.DisplayFor(model => model.InstrumentGeneral.Designation)
+			</td>
+		</tr>
+
+		<tr>
+			<th>
+				@Html.DisplayNameFor(model => model.Marque.Nom)
+			</th>
+
+			<td>
+				@Html.DisplayFor(model => model.Marque.Nom)
+			</td>
+		</tr>
+
+		<tr>
+			<th>
+				@Html.DisplayNameFor(model => model.Norme.CodeNorme)
+			</th>
+
+			<td>
+				@Html.DisplayFor(model => model.Norme.CodeNorme)
+			</td>
+		</tr>
+
+		<tr>
+			<th>
+				@Html.DisplayNameFor(model => model.PosteTravail.Nom)
+			</th>
+
+			<td>
+				@Html.DisplayFor(model => model.PosteTravail.Nom)
+			</td>
+		</tr>
+
+    </table>
+
+    @using (Html.BeginForm()) {
+        @Html.AntiForgeryToken()
+
+        <div class="form-actions no-color">
+            <input type="submit" value="Delete" class="btn btn-danger" /> |
+            @Html.ActionLink("Cancel", "Index")
+        </div>
+    }
+</div>

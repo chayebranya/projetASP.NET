@@ -1,0 +1,193 @@
+﻿@model VegeMoteur.App.Database.InstrumentSpecifique
+@using VegeMoteur.App.Database;
+
+@{
+	ViewBag.Title = "Edit";
+	IEnumerable<InstrumentGeneral> InstumentsGenraux = ViewBag.InstumentsGenraux;
+}
+
+<h4>Edit Instrument Specifique</h4>
+
+
+@using (Html.BeginForm())
+{
+	@Html.AntiForgeryToken()
+
+<div class="form-horizontal">
+
+	<hr />
+	@Html.ValidationSummary(true, "", new { @class = "text-danger" })
+	@Html.HiddenFor(model => model.Id)
+
+	<div class="form-group">
+		<label class="control-label">Instrument General</label>
+		<select class="form-control" name="InstrumentGeneralId" id="InstrumentGeneralId">
+			@foreach (var item in InstumentsGenraux)
+			{
+				<option value="@item.Id" data-etendu="@item.AEtendu" data-code="@item.CodeInterne" data-inst-specifique-count="@item.InstrumentSpecifiques.Count()">@item.Designation | Code: @item.CodeInterne | A etendu: @item.AEtendu</option>
+			}
+		</select>
+	</div>
+	<div class="form-group">
+		@Html.LabelFor(model => model.Code, htmlAttributes: new { @class = "control-label" })
+		@Html.EditorFor(model => model.Code, new { htmlAttributes = new { @class = "form-control" } })
+		@Html.ValidationMessageFor(model => model.Code, "", new { @class = "text-danger" })
+
+	</div>
+
+	<div style="padding: 10px; border:1px solid #e2e2e2" id="aEtenduTrue">
+		<div class="form-group">
+			@Html.LabelFor(model => model.EtenduMax, "Etendu Max", htmlAttributes: new { @class = "control-label" })
+			@Html.EditorFor(model => model.EtenduMax, new { htmlAttributes = new { @class = "form-control" } })
+			@Html.ValidationMessageFor(model => model.EtenduMax, "", new { @class = "text-danger" })
+
+		</div>
+
+		<div class="form-group">
+			@Html.LabelFor(model => model.EtenduMin, "Etendu Min", htmlAttributes: new { @class = "control-label" })
+			@Html.EditorFor(model => model.EtenduMin, new { htmlAttributes = new { @class = "form-control" } })
+			@Html.ValidationMessageFor(model => model.EtenduMin, "", new { @class = "text-danger" })
+
+		</div>
+
+		<div class="form-group">
+			@Html.LabelFor(model => model.Unite, htmlAttributes: new { @class = "control-label" })
+			@Html.EditorFor(model => model.Unite, new { htmlAttributes = new { @class = "form-control" } })
+			@Html.ValidationMessageFor(model => model.Unite, "", new { @class = "text-danger" })
+
+		</div>
+	</div>
+	<div style="padding: 10px; border:1px solid #e2e2e2" id="aEtenduFalse">
+		<div class="form-group">
+			@Html.LabelFor(model => model.Caractere, htmlAttributes: new { @class = "control-label" })
+			@Html.EditorFor(model => model.Caractere, new { htmlAttributes = new { @class = "form-control" } })
+			@Html.ValidationMessageFor(model => model.Caractere, "", new { @class = "text-danger" })
+
+		</div>
+	</div>
+	<br />
+	<div class="form-group">
+		@Html.LabelFor(model => model.Precision, htmlAttributes: new { @class = "control-label" })
+		@Html.EditorFor(model => model.Precision, new { htmlAttributes = new { @class = "form-control" } })
+		@Html.ValidationMessageFor(model => model.Precision, "", new { @class = "text-danger" })
+
+	</div>
+
+	<div class="form-group">
+		@Html.LabelFor(model => model.Type, htmlAttributes: new { @class = "control-label" })
+		@Html.EditorFor(model => model.Type, new { htmlAttributes = new { @class = "form-control" } })
+		@Html.ValidationMessageFor(model => model.Type, "", new { @class = "text-danger" })
+
+	</div>
+
+
+	<div class="form-group">
+		@Html.LabelFor(model => model.Resolution, htmlAttributes: new { @class = "control-label" })
+		@Html.EditorFor(model => model.Resolution, new { htmlAttributes = new { @class = "form-control" } })
+		@Html.ValidationMessageFor(model => model.Resolution, "", new { @class = "text-danger" })
+
+	</div>
+
+	<div class="form-group">
+		@Html.LabelFor(model => model.FrequenceCalibrage, "Frequence Calibrage", htmlAttributes: new { @class = "control-label" })
+		@Html.EditorFor(model => model.FrequenceCalibrage, new { htmlAttributes = new { @class = "form-control" } })
+		@Html.ValidationMessageFor(model => model.FrequenceCalibrage, "", new { @class = "text-danger" })
+
+	</div>
+
+	<div class="form-group">
+		@Html.LabelFor(model => model.FrequenceEtallonage, "Frequence Etallonage", htmlAttributes: new { @class = "control-label" })
+		@Html.EditorFor(model => model.FrequenceEtallonage, new { htmlAttributes = new { @class = "form-control" } })
+		@Html.ValidationMessageFor(model => model.FrequenceEtallonage, "", new { @class = "text-danger" })
+
+	</div>
+
+	<div class="form-group">
+		@Html.LabelFor(model => model.DateMiseEnService, "Date de mise en service", htmlAttributes: new { @class = "control -label" })
+		@Html.EditorFor(model => model.DateMiseEnService, new { htmlAttributes = new { @class = "form-control" } })
+		@Html.ValidationMessageFor(model => model.DateMiseEnService, "", new { @class = "text-danger" })
+	</div>
+	
+
+	<div class="form-group">
+		@Html.LabelFor(model => model.PostTravailId, "Post de Travail", htmlAttributes: new { @class = "control-label" })
+		@Html.DropDownList("PostTravailId", null, htmlAttributes: new { @class = "form-control" })
+		@Html.ValidationMessageFor(model => model.PostTravailId, "", new { @class = "text-danger" })
+
+	</div>
+
+	@*<div class="form-group">
+			@Html.LabelFor(model => model.InstrumentGeneralId, "InstrumentGeneralId", htmlAttributes: new { @class = "control-label" })
+				@Html.DropDownList("InstrumentGeneralId", null, htmlAttributes: new { @class = "form-control" })
+			@Html.ValidationMessageFor(model => model.InstrumentGeneralId, "", new { @class = "text-danger" })
+
+		</div>*@
+
+	<div class="form-group">
+		@Html.LabelFor(model => model.MarqueId, "Marque", htmlAttributes: new { @class = "control-label" })
+		@Html.DropDownList("MarqueId", null, htmlAttributes: new { @class = "form-control" })
+		@Html.ValidationMessageFor(model => model.MarqueId, "", new { @class = "text-danger" })
+
+	</div>
+
+	<hr>
+	<div class="form-group">
+		<input type="submit" value="Save" class="btn btn-primary" />
+	</div>
+</div>
+}
+
+<div>
+	@Html.ActionLink("Back to List", "Index")
+</div>
+
+@section Scripts {
+	@Scripts.Render("~/bundles/jqueryval")
+	<script>
+
+		$(document).ready(function () {
+			// get selected instrument general
+			var selectedInstrumentGeneral = $('#InstrumentGeneralId').find(":selected");
+			var instGeneralCode = selectedInstrumentGeneral.data('code');
+			var instSpecifiqueCount = parseInt(selectedInstrumentGeneral.data('instSpecifiqueCount'));
+			var currentInstSpecifiqueCode = instSpecifiqueCount + 1;
+			var currentInstSpecifiqueCodeStr = generateCode(currentInstSpecifiqueCode);
+
+			$('#Code').val(instGeneralCode + "-" + currentInstSpecifiqueCodeStr);
+
+			if (selectedInstrumentGeneral.data('etendu') == "True") {
+				$('#aEtenduTrue').show();
+				$('#aEtenduFalse').hide();
+			} else {
+				$('#aEtenduTrue').hide();
+				$('#aEtenduFalse').show();
+			}
+			$('#InstrumentGeneralId').on('change', function () {
+
+				instGeneralCode = $(this).children('option:selected').data('code');
+				instSpecifiqueCount = parseInt($(this).children('option:selected').data('instSpecifiqueCount'));
+				currentInstSpecifiqueCode = instSpecifiqueCount + 1;
+				currentInstSpecifiqueCodeStr = generateCode(currentInstSpecifiqueCode);
+
+				$('#Code').val(instGeneralCode + "-" + currentInstSpecifiqueCodeStr);
+				if ($(this).children('option:selected').data('etendu') == "True") {
+					$('#aEtenduTrue').show();
+					$('#aEtenduFalse').hide();
+				} else {
+					$('#aEtenduTrue').hide();
+					$('#aEtenduFalse').show();
+				}
+			})
+
+			function generateCode(intValue) {
+				if (intValue < 10) {
+					return "00" + intValue;
+				} else if (intValue > 9 && intValue < 100) {
+					return "0" + intValue;
+				} else {
+					return intValue;
+				}
+			}
+		});
+	</script>
+}

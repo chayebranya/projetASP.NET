@@ -1,0 +1,128 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8" />
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>@ViewBag.Title - My ASP.NET Application</title>
+	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+	<link rel="stylesheet" href="~/Content/dashboard.css" />
+	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.13.1/css/all.min.css">
+	@Scripts.Render("~/bundles/modernizr")
+	@{
+		var ControllerName = this.ViewContext.RouteData.Values["controller"].ToString();
+	}
+</head>
+<body>
+
+	<nav class="navbar navbar-dark fixed-top bg-dark flex-md-nowrap p-0 shadow">
+		<a class="navbar-brand col-sm-3 col-md-2 mr-0" href="#">
+			<b style="font-size: 18px">
+				Vege Moteur
+			</b>
+		</a>
+		<input class="form-control form-control-dark w-100" type="text" placeholder="Search" aria-label="Search">
+		
+		@Html.Partial("_LoginPartial")
+		
+	</nav>
+
+	<div class="container-fluid">
+		<div class="row">
+			<nav class="col-md-2 d-none d-md-block bg-light sidebar">
+				<div class="sidebar-sticky">
+					<ul class="nav flex-column">
+						<li class="nav-item">
+							<a class="nav-link @(ControllerName.ToLower().Equals("postetravail") ? "active":"")" href="/postetravails">
+								<i class="fas fa-home mr-2"></i>
+								Poste de travail <span class="sr-only">(current)</span>
+							</a>
+						</li>
+						<li class="nav-item">
+							<a class="nav-link @(ControllerName.ToLower().Equals("sections") ? "active":"")" href="/sections">
+								<i class="fas fa-th-list mr-2"></i>
+								Sections
+							</a>
+						</li>
+						<li class="nav-item">
+							<a class="nav-link @(ControllerName.ToLower().Equals("marques") ? "active":"")" href="/marques">
+								<i class="fas fa-layer-group mr-2"></i>
+								Marques
+							</a>
+						</li>
+						<li class="nav-item">
+							<a class="nav-link @(ControllerName.ToLower().Equals("instrumentgenerals") ? "active":"")" href="/instrumentgenerals">
+								<i class="fas fa-cubes mr-2"></i>
+								Instrument General
+							</a>
+						</li>
+						<li class="nav-item">
+							<a class="nav-link  @(ControllerName.ToLower().Equals("instrumentspecifiques") ? "active":"")" href="/instrumentspecifiques">
+								<i class="fas fa-cube mr-2"></i>
+								Instrument Specifique
+							</a>
+						</li>
+						<li class="nav-item">
+							<a class="nav-link" href="#">
+								<i class="far fa-map mr-2"></i>
+								Fiche de vie
+							</a>
+						</li>
+					</ul>
+
+					<h6 class="sidebar-heading d-flex justify-content-between align-items-center px-3 mt-4 mb-1 text-muted">
+						<span></span>
+						<a class="d-flex align-items-center text-muted" href="#" aria-label="Add a new report">
+							<span data-feather="plus-circle"></span>
+						</a>
+					</h6>
+					<ul class="nav flex-column mb-2">
+						<li class="nav-item">
+							<a class="nav-link @(ControllerName.ToLower().Equals("normes") ? "active":"")" href="/normes">
+								<i class="fas fa-book mr-2"></i>
+								Normes
+							</a>
+						</li>
+						<li class="nav-item">
+							<a class="nav-link @(ControllerName.ToLower().Equals("cales") ? "active":"")" href="/cales">
+								<i class="fas fa-book mr-2"></i>
+								Cales
+							</a>
+						</li>
+						<li class="nav-item">
+							<a class="nav-link @(ControllerName.ToLower().Equals("verifications") ? "active":"")" href="/verifications">
+								<i class="fas fa-check-circle mr-2"></i>
+								Verifications
+							</a>
+						</li>
+
+						<li class="nav-item">
+							<a class="nav-link @(ControllerName.ToLower().Equals("calendriers") ? "active":"")" href="#">
+								<i class="fas fa-calendar-check mr-2"></i>
+								Calendrier
+							</a>
+						</li>
+					</ul>
+				</div>
+			</nav>
+			<br>
+			<br>
+			<main role="main" class="col-md-9 ml-sm-auto col-lg-10 pt-3 mt-5 px-4">
+				@RenderBody()
+			</main>
+
+		</div>
+	</div>
+
+	<hr />
+	<footer>
+		<p>&copy; @DateTime.Now.Year - My ASP.NET Application</p>
+	</footer>
+
+
+	@Scripts.Render("~/bundles/jquery")
+	@Scripts.Render("~/bundles/bootstrap")
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.13.1/js/all.min.js"></script>
+	<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js" integrity="sha256-4+XzXVhsDmqanXGHaHvgh1gMQKX40OUvDEBTu8JcmNs=" crossorigin="anonymous"></script>
+	@RenderSection("scripts", required: false)
+</body>
+</html>

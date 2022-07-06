@@ -1,0 +1,112 @@
+﻿@model VegeMoteur.App.Database.Verification
+@using VegeMoteur.App.Database;
+@{
+	ViewBag.Title = "Create";
+	List<InstrumentSpecifique> InstrumentsSpecifiques = ViewBag.InstrumentsSpecifiques;
+}
+
+<h4>Create Verification</h4>
+
+
+@using (Html.BeginForm())
+{
+	@Html.AntiForgeryToken()
+
+<div>
+
+	<hr />
+	@Html.ValidationSummary(true, "", new { @class = "text-danger" })
+	<div class="form-group">
+		@Html.LabelFor(model => model.Description, htmlAttributes: new { @class = "control-label" })
+		@Html.EditorFor(model => model.Description, new { htmlAttributes = new { @class = "form-control", @Value = "Verification " + DateTime.Now.ToString("dd/MM/yyyy") } })
+		@Html.ValidationMessageFor(model => model.Description, "", new { @class = "text-danger" })
+
+	</div>
+	<hr />
+	<div class="form-group">
+		<p class="lead">Veuillez sélectionner l'instrument pour démarrer le processus de vérification</p>
+		@Html.LabelFor(model => model.InstrumentSpecifiqueId, "Instrument Specifique", htmlAttributes: new { @class = "control-label" })
+		<select class="form-control" name="InstrumentSpecifiqueId" id="instrumentSpecifique">
+			@foreach (var item in InstrumentsSpecifiques)
+			{
+				// get current latest norme
+				var norme = item.Normes.OrderByDescending(n => n.Id).ToList().FirstOrDefault();
+				<option value="@item.Id" data-cale-count="@(norme != null ? norme.Cales.Count:0)">@item.Code</option>
+			}
+		</select>
+		@Html.ValidationMessageFor(model => model.InstrumentSpecifiqueId, "", new { @class = "text-danger" })
+
+	</div>
+
+	<div class="form-group">
+		<button type="button" class="btn btn-outline-success btn-sm" id="commencerBtn">Commencer</button>
+	</div>
+	<hr />
+	<div class="alert alert-danger" id="errorMessageDiv" style="display: none"></div>
+
+	<div id="etape1Div" style="display: none">
+		<p class="lead">
+			Partie 1: Erreur de contact pleine touche
+		</p>
+		<table class="table table-bordered">
+			
+		</table>
+		<div class="form-group">
+			<button type="button" class="btn btn-outline-success btn-sm" id="commencerBtn">Calculer Emax</button>
+		</div>
+	</div>
+
+
+
+	<div id="etape2Div" style="display: none">
+		<p class="lead">
+			Partie 2: Erreur de contact partiel
+		</p>
+	</div>
+
+	<div class="form-group">
+		<input type="submit" value="Create" class="btn btn-primary" />
+	</div>
+</div>
+}
+
+<div>
+	@Html.ActionLink("Back to List", "Index")
+</div>
+
+@section Scripts {
+	@Scripts.Render("~/bundles/jqueryval")
+<script>
+	$(document).ready(function () {
+		var commencerBtn = $('#commencerBtn');
+		var errorMessageDiv = $('#errorMessageDiv');
+		var instrumentSpecifique = $('#instrumentSpecifique');
+		var etape1Div = $('#etape1Div');
+		var etape2Div = $('#etape2Div');
+
+		commencerBtn.on('click', function () {
+			var selectedInstrumentSpecifique = instrumentSpecifique.find(":selected");
+			if (parseInt(selectedInstrumentSpecifique.data('caleCount')) == 0) {
+				errorMessageDiv.show();
+				errorMessageDiv.html("L'instrument sélectionné n'a pas de norme ou sa norme n'a pas de position");
+			} else {
+				errorMessageDiv.hide();
+				etape1Div.show();
+				genererTableMesure(parseInt(selectedInstrumentSpecifique.data('caleCount')));
+			}
+		});
+
+		function genererTableMesure(nombreCales) {
+			var tableContent = "";
+			tableContent += '<tr id="row1">\
+									<th style = "white-space: nowrap">\
+										Valeur conventionnellement vraie(Vc)(cale)\
+									</th>';
+			for (i = 0; i < nombreCales; i++) {
+				tableContent += '<td>' + ;
+			}
+			tableContent += '</tr>';
+		}
+	});
+</script>
+}

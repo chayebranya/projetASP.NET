@@ -1,0 +1,27 @@
+﻿@model VegeMoteur.App.Database.Position
+
+@{
+    ViewBag.Title = "Details";
+}
+
+<h4>Details | Position</h4>
+
+<div>
+    <hr />
+    <table class="table table-hover">
+		<tr>
+			<th width="15%">
+				@Html.DisplayNameFor(model => model.Nom)
+			</th>
+
+			<td>
+				@Html.DisplayFor(model => model.Nom)
+			</td>
+		</tr>
+
+    </table>
+</div>
+<p>
+    @Html.ActionLink("Edit", "Edit", new { id = Model.Id }) |
+    @Html.ActionLink("Back to List", "Index")
+</p>

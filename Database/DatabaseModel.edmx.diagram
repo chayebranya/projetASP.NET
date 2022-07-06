@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+ <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <!-- Diagram content (shape and connector positions) -->
+    <edmx:Diagrams>
+      <Diagram DiagramId="38debcc65bbb472db6164228640361bc" Name="Diagram1" ZoomLevel="93">
+        <EntityTypeShape EntityType="VegeMoteurDBModel.Cale" Width="1.5" PointX="9.75" PointY="5.375" />
+        <EntityTypeShape EntityType="VegeMoteurDBModel.CalendrierCalibrage" Width="1.5" PointX="7.5" PointY="2.5" />
+        <EntityTypeShape EntityType="VegeMoteurDBModel.InstrumentGeneral" Width="1.5" PointX="3" PointY="0.75" />
+        <EntityTypeShape EntityType="VegeMoteurDBModel.InstrumentSpecifique" Width="1.5" PointX="5.25" PointY="2.625" />
+        <EntityTypeShape EntityType="VegeMoteurDBModel.Marque" Width="1.5" PointX="3" PointY="7.625" />
+        <EntityTypeShape EntityType="VegeMoteurDBModel.Norme" Width="1.5" PointX="7.5" PointY="5.125" />
+        <EntityTypeShape EntityType="VegeMoteurDBModel.PosteTravail" Width="1.5" PointX="3" PointY="4" />
+        <EntityTypeShape EntityType="VegeMoteurDBModel.Section" Width="1.5" PointX="0.75" PointY="4.25" />
+        <AssociationConnector Association="VegeMoteurDBModel.FK_Cale_Norme" />
+        <AssociationConnector Association="VegeMoteurDBModel.FK_CalendrierCalibrage_InstrumentSpecifique" />
+        <AssociationConnector Association="VegeMoteurDBModel.FK_InstrumentSpecifique_InstrumentGeneral" />
+        <AssociationConnector Association="VegeMoteurDBModel.FK_InstrumentSpecifique_Marque" />
+        <AssociationConnector Association="VegeMoteurDBModel.FK_InstrumentSpecifique_PosteTravail" />
+        <AssociationConnector Association="VegeMoteurDBModel.FK_Norme_InstrumentSpecifique" />
+        <AssociationConnector Association="VegeMoteurDBModel.FK_PosteTravail_Section" />
+        <EntityTypeShape EntityType="VegeMoteurDBModel.CalibrageCale" Width="1.5" PointX="12" PointY="8.25" />
+        <EntityTypeShape EntityType="VegeMoteurDBModel.ErreurContactPartiel" Width="1.5" PointX="9.75" PointY="8.375" />
+        <EntityTypeShape EntityType="VegeMoteurDBModel.ErreurContactPleineTouche" Width="1.5" PointX="9.75" PointY="11.375" />
+        <EntityTypeShape EntityType="VegeMoteurDBModel.Position" Width="1.5" PointX="12.75" PointY="5.75" />
+        <EntityTypeShape EntityType="VegeMoteurDBModel.Verification" Width="1.5" PointX="7.5" PointY="10.125" />
+        <EntityTypeShape EntityType="VegeMoteurDBModel.VerificationPosition" Width="1.5" PointX="15" PointY="8.25" />
+        <AssociationConnector Association="VegeMoteurDBModel.FK_CalibrageCale_Cale" />
+        <AssociationConnector Association="VegeMoteurDBModel.FK_CalibrageCale_ErreurContactPleineTouche" />
+        <AssociationConnector Association="VegeMoteurDBModel.FK_ErreurContactPartiel_Verification" />
+        <AssociationConnector Association="VegeMoteurDBModel.FK_VerificationPosition_ErreurContactPartiel" />
+        <AssociationConnector Association="VegeMoteurDBModel.FK_ErreurContactPleineTouche_Verification" />
+        <AssociationConnector Association="VegeMoteurDBModel.FK_Verification_InstrumentSpecifique" />
+        <AssociationConnector Association="VegeMoteurDBModel.FK_VerificationPosition_Position" />
+        </Diagram>
+    </edmx:Diagrams>
+  </edmx:Designer>
+</edmx:Edmx>

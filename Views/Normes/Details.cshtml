@@ -1,0 +1,64 @@
+﻿@model VegeMoteur.App.Database.Norme
+
+@{
+    ViewBag.Title = "Details";
+}
+
+<h4>Details | Norme</h4>
+
+<div>
+    <hr />
+	<table class="table table-hover">
+		<tr>
+			<th width="15%">
+				Code Norme
+			</th>
+
+			<td>
+				@Html.DisplayFor(model => model.InstrumentSpecifique.Code)
+			</td>
+		</tr>
+
+		<tr>
+			<th width="15%">
+				Nombre Position
+			</th>
+
+			<td>
+				@Html.DisplayFor(model => model.NombrePosition)
+			</td>
+		</tr>
+
+		<tr>
+			<th width="15%">
+				Actuelle
+			</th>
+
+			<td>
+				@Html.DisplayFor(model => model.Actuelle)
+			</td>
+		</tr>
+
+		<tr>
+			<th width="15%">
+				Cales
+			</th>
+
+			<td>
+				<table class="table table-bordered">
+					<tr>
+						@foreach (var cale in Model.Cales)
+						{
+							<td>@cale.Valeur</td>
+						}
+					</tr>
+				</table>
+			</td>
+		</tr>
+
+	</table>
+</div>
+<p>
+    @Html.ActionLink("Edit", "Edit", new { id = Model.Id }) |
+    @Html.ActionLink("Back to List", "Index")
+</p>

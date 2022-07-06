@@ -1,0 +1,63 @@
+﻿@model VegeMoteur.App.Database.InstrumentGeneral
+
+@{
+    ViewBag.Title = "Edit";
+}
+
+<h4>Edit InstrumentGeneral</h4>
+
+
+@using (Html.BeginForm())
+{
+    @Html.AntiForgeryToken()
+    
+    <div class="form-horizontal">
+       
+        <hr />
+        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+        @Html.HiddenFor(model => model.Id)
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.CodeInterne, htmlAttributes: new { @class = "control-label col-md-2" })
+                @Html.EditorFor(model => model.CodeInterne, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.CodeInterne, "", new { @class = "text-danger" })
+           
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.Designation, htmlAttributes: new { @class = "control-label col-md-2" })
+                @Html.EditorFor(model => model.Designation, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.Designation, "", new { @class = "text-danger" })
+           
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.AEtendu, htmlAttributes: new { @class = "control-label col-md-2" })
+                <div class="checkbox">
+                    @Html.EditorFor(model => model.AEtendu)
+                    @Html.ValidationMessageFor(model => model.AEtendu, "", new { @class = "text-danger" })
+                </div>
+           
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.Date, htmlAttributes: new { @class = "control-label col-md-2" })
+                @Html.EditorFor(model => model.Date, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.Date, "", new { @class = "text-danger" })
+           
+        </div>
+
+		<hr>
+        <div class="form-group">            
+			<input type="submit" value="Save" class="btn btn-primary" />            
+        </div>
+    </div>
+}
+
+<div>
+    @Html.ActionLink("Back to List", "Index")
+</div>
+
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+}

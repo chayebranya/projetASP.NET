@@ -1,0 +1,57 @@
+﻿@model VegeMoteur.App.Database.InstrumentGeneral
+
+@{
+    ViewBag.Title = "Details";
+}
+
+<h4>Details | InstrumentGeneral</h4>
+
+<div>
+    <hr />
+    <table class="table table-hover">
+		<tr>
+			<th width="15%">
+				@Html.DisplayNameFor(model => model.CodeInterne)
+			</th>
+
+			<td>
+				@Html.DisplayFor(model => model.CodeInterne)
+			</td>
+		</tr>
+
+		<tr>
+			<th width="15%">
+				@Html.DisplayNameFor(model => model.Designation)
+			</th>
+
+			<td>
+				@Html.DisplayFor(model => model.Designation)
+			</td>
+		</tr>
+
+		<tr>
+			<th width="15%">
+				@Html.DisplayNameFor(model => model.AEtendu)
+			</th>
+
+			<td>
+				@Html.DisplayFor(model => model.AEtendu)
+			</td>
+		</tr>
+
+		<tr>
+			<th width="15%">
+				@Html.DisplayNameFor(model => model.Date)
+			</th>
+
+			<td>
+				@Html.DisplayFor(model => model.Date)
+			</td>
+		</tr>
+
+    </table>
+</div>
+<p>
+    @Html.ActionLink("Edit", "Edit", new { id = Model.Id }) |
+    @Html.ActionLink("Back to List", "Index")
+</p>

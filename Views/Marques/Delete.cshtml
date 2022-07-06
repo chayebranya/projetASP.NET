@@ -1,0 +1,34 @@
+﻿@model VegeMoteur.App.Database.Marque
+
+@{
+    ViewBag.Title = "Delete";
+}
+
+<h4>Delete</h4>
+
+<b>Are you sure you want to delete this?</b>
+<div>
+    <b>Marque</b>
+    <hr />
+    <table class="table table-hover">
+		<tr>
+			<th>
+				@Html.DisplayNameFor(model => model.Nom)
+			</th>
+
+			<td>
+				@Html.DisplayFor(model => model.Nom)
+			</td>
+		</tr>
+
+    </table>
+
+    @using (Html.BeginForm()) {
+        @Html.AntiForgeryToken()
+
+        <div class="form-actions no-color">
+            <input type="submit" value="Delete" class="btn btn-danger" /> |
+            @Html.ActionLink("Cancel", "Index")
+        </div>
+    }
+</div>

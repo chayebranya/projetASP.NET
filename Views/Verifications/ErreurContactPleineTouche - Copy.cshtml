@@ -1,0 +1,139 @@
+﻿@model VegeMoteur.App.Database.InstrumentSpecifique
+@using VegeMoteur.App.Database;
+
+@{
+    ViewBag.Title = "Erreur de Contact Pleine Touche";
+    Norme normeActuelle = Model.Normes.Where(n => n.Actuelle).FirstOrDefault();
+}
+@Scripts.Render("~/bundles/jquery")
+<h4>Etape 1</h4>
+<h5>Erreur de Contact Pleine Touche</h5>
+<table class="table table-bordered">
+    <tr>
+        <th style="white-space: nowrap">
+            Valeur conventionnellement vraie (Vc) (cale)
+        </th>
+        @{
+            int index = 0;
+            int indexMessage = 0;
+        }
+        @foreach (var cale in normeActuelle.Cales)
+        {
+            <td>
+                @cale.Valeur
+                <input type="text" class="form-control" id="cale-@(index++)" value="@cale.Valeur" data-id="@cale.Id" />
+            </td>
+        }
+    </tr>
+    <tr>
+        <th>
+            Mesure A
+        </th>
+        @{
+            index = 0;
+            indexMessage = 0;
+        }
+        @foreach (var cale in normeActuelle.Cales)
+        {
+            <td>
+                <input type="text" class="form-control" id="mesureA-@(index++)" />
+                <span id="mesureAMessage-@(indexMessage++)" class="text-danger"></span>
+            </td>
+        }
+    </tr>
+    <tr>
+        <th>
+            Mesure B
+        </th>
+        @{
+            index = 0;
+        }
+        @foreach (var cale in normeActuelle.Cales)
+        {
+            <td>
+                <input type="text" class="form-control" id="mesureB-@index" />
+                <span id="mesureBMessage-@(indexMessage++)" class="text-danger"></span>
+                <script>
+                    $(document).ready(function () {
+                        $('#mesureA-' + @index).on('keyup', function () {
+                            var val = $(this).val();
+                            if (isNaN(val) || val === '') {
+                                $('#mesureAMessage-' + @index).html("Valeur n'est pas valide.")
+                            } else {
+                                $('#mesureAMessage-' + @index).html("");
+                                $('#mesureB-' + @index).val(Math.abs(parseFloat($('#cale-' + @index).val()) - parseFloat(val)));
+                            }
+                        });
+                    })
+                </script>
+                <span>
+                    @{
+                        index += 1;
+                    }
+                </span>
+            </td>
+            
+        }
+    </tr>
+
+    <tr>
+        <th>
+            Ecart A
+        </th>
+        @{
+            index = 0;
+        }
+        @foreach (var cale in normeActuelle.Cales)
+        {
+            <td>
+                <input type="text" class="form-control" id="ecartA-@index" />
+                <script>
+                    $(document).ready(function () {
+                        $('#mesureB-' + @index).on('keyup', function () {
+                            var valMesureA = $(this).val();
+                            console.log(valMesureA);
+                            if (isNaN(valMesureA) || valMesureA === '') {
+                                $('#mesureBMessage-' + @index).html("Valeur n'est pas valide.")
+                            } else {
+                                $('#mesureBMessage-' + @index).html("");
+                                $('#ecartA-' + @index).val(Math.abs(parseFloat($('#mesureB-' + @index).val()) - parseFloat(valMesureA)));
+                            }
+                        });
+                    })
+                </script>
+                <span>
+                    @{
+                        index += 1;
+                    }
+                </span>
+            </td>
+        }
+    </tr>
+</table>
+
+<div>
+    @Html.ActionLink("Back to List", "Index")
+</div>
+
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+    <script>
+        $(document).ready(function () {
+            var caleCount = parseInt('@normeActuelle.Cales.Count()');
+             //console.log(caleCount);
+            //for (i = 0; i < caleCount; i++) {
+            //    $('#mesureA-' + i).on('keyup', function () {
+            //        var val = $(this).val();
+            //        console.log(val);
+
+            //        if (isNaN(val)) {
+            //            console.log('#mesureAMessage-' + i);
+            //            $('#mesureAMessage-' + i).html("Valeur n'est pas valide.")
+            //        } else {
+
+            //        }
+            //    });
+            //}
+        });
+    </script>
+}
